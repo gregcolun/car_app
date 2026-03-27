@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalii Anunț</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="pagina">
+    <header class="hero">
+        <h1>Detalii Anunț</h1>
+        <p>Vezi și modifică anunțul selectat.</p>
+    </header>
+
+    <main class="detalii-container">
+        <section class="card card-detalii">
+            <div class="header-card">
+                <button id="backBtn" class="btn-ghost" type="button">Înapoi la anunțuri</button>
+                <button id="logoutBtnDetalii" class="btn-ghost" type="button">Ieșire din cont</button>
+            </div>
+
+            <p id="mesajDetalii" class="mesaj-global"></p>
+            <div id="detaliiAnunt"></div>
+        </section>
+
+        <section class="card card-editare">
+            <h2>Editează anunțul</h2>
+            <p id="mesajEditare" class="mesaj-global"></p>
+
+            <form id="editForm" class="formular">
+                <label for="editTitlu">Titlu</label>
+                <input id="editTitlu" name="titlu" type="text" required>
+
+                <label for="editDescriere">Descriere</label>
+                <textarea id="editDescriere" name="descriere" rows="4" required></textarea>
+
+                <label for="editPret">Preț (EUR)</label>
+                <input id="editPret" name="pret" type="number" min="1" step="0.01" required>
+
+                <label for="editImagineFisier">Poză nouă (opțional)</label>
+                <input id="editImagineFisier" name="editImagineFisier" type="file" accept="image/*">
+                <p id="mesajImagineEditare" class="text-gri mesaj-fisier">Poți încărca o imagine JPG/PNG de maxim 3 MB.</p>
+                <img id="previewImagineEditare" class="preview-imagine ascuns" alt="Previzualizare imagine editare">
+
+                <div class="actiuni-editare">
+                    <button id="stergeImagineBtn" class="btn-delete" type="button">Șterge poza</button>
+                    <button type="submit">Salvează modificările</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+<script src="/ad.js"></script>
+</body>
+</html>

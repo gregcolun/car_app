@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platformă Auto</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="pagina">
+    <header class="hero">
+        <h1>Platformă Auto</h1>
+        <p>Cumpără și vinde mașini rapid, într-un mod simplu.</p>
+    </header>
+
+    <main class="grid-principal">
+        <section id="cardAutentificare" class="card card-autentificare">
+            <h2>Autentificare</h2>
+            <p id="mesajAuth" class="mesaj-auth"></p>
+            <form id="loginForm" class="formular">
+                <label for="loginUsername">Nume utilizator</label>
+                <input id="loginUsername" name="username" type="text" placeholder="Ex: ionut.auto" required>
+
+                <label for="loginPassword">Parolă</label>
+                <input id="loginPassword" name="password" type="password" placeholder="Introdu parola" required>
+
+                <button type="submit">Intră în cont</button>
+            </form>
+
+            <hr>
+
+            <h2>Înregistrare</h2>
+            <form id="registerForm" class="formular">
+                <label for="registerUsername">Nume utilizator</label>
+                <input id="registerUsername" name="username" type="text" placeholder="Alege un nume utilizator" required>
+
+                <label for="registerPassword">Parolă</label>
+                <input id="registerPassword" name="password" type="password" placeholder="Alege o parolă" required>
+
+                <button type="submit" class="btn-secundar">Creează cont</button>
+            </form>
+        </section>
+
+        <section id="cardAnuntNou" class="card ascuns">
+            <div class="header-card">
+                <h2>Anunț nou</h2>
+                <button id="logoutBtn" class="btn-ghost ascuns" type="button">Ieșire din cont</button>
+            </div>
+
+            <p id="statusAutentificare" class="status">Nu ești autentificat.</p>
+
+            <form id="adForm" class="formular">
+                <label for="titlu">Titlu</label>
+                <input id="titlu" name="titlu" type="text" placeholder="Ex: BMW Seria 3 2018" required>
+
+                <label for="descriere">Descriere</label>
+                <textarea id="descriere" name="descriere" rows="4" placeholder="Descrie mașina, kilometraj, dotări etc." required></textarea>
+
+                <label for="pret">Preț (EUR)</label>
+                <input id="pret" name="pret" type="number" min="1" step="0.01" placeholder="Ex: 65000" required>
+
+                <label for="imagineFisier">Poză mașină (opțional)</label>
+                <input id="imagineFisier" name="imagineFisier" type="file" accept="image/*">
+                <p id="mesajImagine" class="text-gri mesaj-fisier">Poți încărca o imagine JPG/PNG de maxim 3 MB.</p>
+                <img id="previewImagine" class="preview-imagine ascuns" alt="Previzualizare imagine anunț">
+
+                <button type="submit">Publică anunț</button>
+            </form>
+        </section>
+    </main>
+
+    <section id="cardAnunturi" class="card card-lista ascuns">
+        <div class="header-card">
+            <h2>Anunțurile mele</h2>
+            <button id="refreshBtn" class="btn-secundar" type="button">Reîncarcă</button>
+        </div>
+
+        <p id="mesajGlobal" class="mesaj-global"></p>
+        <div id="adsContainer" class="ads-grid"></div>
+    </section>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

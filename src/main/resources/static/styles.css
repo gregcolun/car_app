@@ -1,0 +1,314 @@
+:root {
+    --albastru: #1f6feb;
+    --albastru-inchis: #1959bd;
+    --gri-deschis: #f3f6fb;
+    --gri-mediu: #d8dfeb;
+    --text: #1e2a3a;
+    --alb: #ffffff;
+    --rosu: #d14343;
+    --verde: #1f8a4c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, #eef3fb 0%, #f7f9fd 50%, #eef4ff 100%);
+}
+
+.pagina {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #12325f;
+}
+
+.hero p {
+    margin-top: 8px;
+    color: #4b5d77;
+}
+
+.grid-principal {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.card {
+    background: var(--alb);
+    border: 1px solid var(--gri-mediu);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 25px rgba(17, 35, 66, 0.08);
+    width: 100%;
+    max-width: 760px;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+}
+
+.formular {
+    display: grid;
+    gap: 8px;
+}
+
+.formular label {
+    font-weight: 600;
+    font-size: 0.93rem;
+}
+
+.formular input,
+.formular textarea {
+    border: 1px solid #c6d2e6;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    background: #fbfdff;
+}
+
+.formular input:focus,
+.formular textarea:focus {
+    outline: 2px solid rgba(31, 111, 235, 0.25);
+    border-color: var(--albastru);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+    background: var(--albastru);
+    color: #fff;
+}
+
+button:hover {
+    background: var(--albastru-inchis);
+}
+
+.btn-secundar {
+    background: #2c7be5;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #274d85;
+    border: 1px solid #bfd0ec;
+}
+
+.btn-ghost:hover {
+    background: #eaf1fd;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e7f4;
+    margin: 14px 0;
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.status {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #456183;
+    background: #eef4ff;
+    border: 1px solid #d5e3fb;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.mesaj-auth {
+    min-height: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.mesaj-global {
+    min-height: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.mesaj-eroare {
+    color: var(--rosu);
+}
+
+.mesaj-succes {
+    color: var(--verde);
+}
+
+.ascuns {
+    display: none !important;
+}
+
+.ads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+}
+
+.ad-card {
+    border: 1px solid #d9e2f0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fbfdff;
+    cursor: pointer;
+}
+
+.ad-imagine {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: #e9eff9;
+}
+
+.ad-placeholder {
+    height: 160px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #dfe9f9, #edf3fe);
+    color: #3a5b8d;
+    font-weight: 700;
+}
+
+.ad-body {
+    padding: 12px;
+    display: grid;
+    gap: 6px;
+}
+
+.ad-body h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #1a365d;
+}
+
+.ad-descriere {
+    margin: 0;
+    color: #3c4f69;
+    font-size: 0.92rem;
+    min-height: 40px;
+}
+
+.ad-pret {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #114ea7;
+}
+
+.ad-owner {
+    margin: 0;
+    color: #556c8d;
+    font-size: 0.86rem;
+}
+
+.btn-delete {
+    background: #d14343;
+}
+
+.btn-delete:hover {
+    background: #b33232;
+}
+
+.btn-detalii {
+    background: #2f6fd6;
+}
+
+.btn-detalii:hover {
+    background: #275eb4;
+}
+
+.actiuni-anunt {
+    display: flex;
+    gap: 8px;
+}
+
+.actiuni-anunt button {
+    flex: 1;
+}
+
+.text-gri {
+    color: #5a6f8f;
+}
+
+.card-lista {
+    margin: 0 auto;
+}
+
+.detalii-container {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+}
+
+.card-detalii,
+.card-editare {
+    width: 100%;
+    max-width: 760px;
+}
+
+.ad-card-mare {
+    cursor: default;
+}
+
+.ad-imagine-mare,
+.ad-placeholder-mare {
+    height: 260px;
+}
+
+.actiuni-editare {
+    display: flex;
+    gap: 8px;
+}
+
+.actiuni-editare button {
+    flex: 1;
+}
+
+.mesaj-fisier {
+    margin: 0;
+    font-size: 0.86rem;
+}
+
+.preview-imagine {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #d6e2f3;
+}
+
+@media (max-width: 820px) {
+    .pagina {
+        padding: 16px 12px 26px;
+    }
+}
