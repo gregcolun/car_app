@@ -10,6 +10,7 @@ public class CarAdResponse {
     private String titlu;
     private String descriere;
     private BigDecimal pret;
+    private String nrTelefon;
     private String imagineUrl;
     private String ownerUsername;
 
@@ -19,6 +20,7 @@ public class CarAdResponse {
         response.setTitlu(carAd.getTitlu());
         response.setDescriere(carAd.getDescriere());
         response.setPret(carAd.getPret());
+        response.setNrTelefon(carAd.getNrTelefon());
         response.setImagineUrl(carAd.getImagineUrl());
         response.setOwnerUsername(carAd.getOwner().getUsername());
         return response;
@@ -62,6 +64,14 @@ public class CarAdResponse {
 
     public void setImagineUrl(String imagineUrl) {
         this.imagineUrl = imagineUrl;
+    }
+
+    public String getNrTelefon() {
+        return nrTelefon;
+    }
+
+    public void setNrTelefon(String nrTelefon) {
+        this.nrTelefon = nrTelefon;
     }
 
     public String getOwnerUsername() {

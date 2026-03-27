@@ -64,6 +64,7 @@ public class CarAdController {
         carAd.setTitlu(request.getTitlu().trim());
         carAd.setDescriere(request.getDescriere().trim());
         carAd.setPret(request.getPret());
+        carAd.setNrTelefon(request.getNrTelefon().trim());
 
         String imagineUrl = request.getImagineUrl();
         if (imagineUrl != null && !imagineUrl.isBlank()) {
@@ -96,6 +97,7 @@ public class CarAdController {
         carAd.setTitlu(request.getTitlu().trim());
         carAd.setDescriere(request.getDescriere().trim());
         carAd.setPret(request.getPret());
+        carAd.setNrTelefon(request.getNrTelefon().trim());
 
         String imagineUrl = request.getImagineUrl();
         if (imagineUrl == null || imagineUrl.isBlank()) {

@@ -2,13 +2,17 @@ const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 const adForm = document.getElementById("adForm");
 const adsContainer = document.getElementById("adsContainer");
+const adsPublicContainer = document.getElementById("adsPublicContainer");
 const mesajGlobal = document.getElementById("mesajGlobal");
+const mesajPublic = document.getElementById("mesajPublic");
 const statusAutentificare = document.getElementById("statusAutentificare");
 const logoutBtn = document.getElementById("logoutBtn");
 const refreshBtn = document.getElementById("refreshBtn");
+const refreshPublicBtn = document.getElementById("refreshPublicBtn");
 const cardAutentificare = document.getElementById("cardAutentificare");
 const cardAnuntNou = document.getElementById("cardAnuntNou");
 const cardAnunturi = document.getElementById("cardAnunturi");
+const cardAnunturiPublice = document.getElementById("cardAnunturiPublice");
 const imagineFisierInput = document.getElementById("imagineFisier");
 const mesajImagine = document.getElementById("mesajImagine");
 const previewImagine = document.getElementById("previewImagine");
@@ -42,6 +46,18 @@ function seteazaMesajAuth(text, tip = "") {
     }
     if (tip === "succes") {
         mesajAuth.classList.add("mesaj-succes");
+    }
+}
+
+function seteazaMesajPublic(text, tip = "") {
+    mesajPublic.textContent = text;
+    mesajPublic.className = "mesaj-global";
+
+    if (tip === "eroare") {
+        mesajPublic.classList.add("mesaj-eroare");
+    }
+    if (tip === "succes") {
+        mesajPublic.classList.add("mesaj-succes");
     }
 }
 
@@ -123,6 +139,23 @@ async function citesteMesajEroare(response) {
     }
 }
 
+async function incarcaAnunturiPublice() {
+    const response = await fetch("/ads");
+
+    if (!response.ok) {
+        const mesaj = await citesteMesajEroare(response);
+        seteazaMesajPublic(mesaj, "eroare");
+        adsPublicContainer.innerHTML = "";
+        return;
+    }
+
+    const ads = await response.json();
+    const adsPublice = currentUsername
+        ? ads.filter((ad) => ad.ownerUsername !== currentUsername)
+        : ads;
+    afiseazaAnunturiPublice(adsPublice);
+}
+
 async function incarcaAnunturi() {
     if (!(token && currentUsername)) {
         adsContainer.innerHTML = "";
@@ -187,6 +220,7 @@ function afiseazaAnunturi(ads) {
                 <h3>${ad.titlu}</h3>
                 <p class="ad-descriere">${ad.descriere}</p>
                 <p class="ad-pret">${pretFormatat}</p>
+                <p class="ad-owner">Telefon: ${ad.nrTelefon || "-"}</p>
                 <p class="ad-owner">Publicat de: ${ad.ownerUsername}</p>
                 <div class="actiuni-anunt">
                     ${butonDetalii}
@@ -216,6 +250,57 @@ function afiseazaAnunturi(ads) {
             const id = btn.getAttribute("data-id");
             await stergeAnunt(id);
         });
+    });
+}
+
+function afiseazaAnunturiPublice(ads) {
+    adsPublicContainer.innerHTML = "";
+    seteazaMesajPublic("", "");
+
+    if (!ads.length) {
+        const mesajGol = currentUsername
+            ? "Nu există anunțuri publicate de alți utilizatori."
+            : "Nu există anunțuri publicate momentan.";
+        adsPublicContainer.innerHTML = `<p class='text-gri'>${mesajGol}</p>`;
+        return;
+    }
+
+    ads.forEach((ad) => {
+        const card = document.createElement("article");
+        card.className = "ad-card";
+
+        const imagine = ad.imagineUrl
+            ? `<img class="ad-imagine" src="${ad.imagineUrl}" alt="${ad.titlu}" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">`
+            : "";
+
+        const placeholderStyle = ad.imagineUrl ? "style='display:none'" : "";
+        const placeholder = `<div class="ad-placeholder" ${placeholderStyle}>Fără imagine</div>`;
+        const pretFormatat = formatPretCuMdl(ad.pret);
+
+        card.innerHTML = `
+            ${imagine}
+            ${placeholder}
+            <div class="ad-body">
+                <h3>${ad.titlu}</h3>
+                <p class="ad-descriere">${ad.descriere}</p>
+                <p class="ad-pret">${pretFormatat}</p>
+                <p class="ad-owner">Telefon: ${ad.nrTelefon || "-"}</p>
+                <p class="ad-owner">Publicat de: ${ad.ownerUsername}</p>
+                <button class="btn-detalii" type="button">Vezi anunțul</button>
+            </div>
+        `;
+
+        card.addEventListener("click", () => {
+            mergiLaDetaliiAnunt(ad.id);
+        });
+
+        const butonDetalii = card.querySelector(".btn-detalii");
+        butonDetalii.addEventListener("click", (event) => {
+            event.stopPropagation();
+            mergiLaDetaliiAnunt(ad.id);
+        });
+
+        adsPublicContainer.appendChild(card);
     });
 }
 
@@ -304,6 +389,7 @@ loginForm.addEventListener("submit", async (event) => {
     seteazaMesajAuth("");
     seteazaMesaj("Autentificare realizată cu succes.", "succes");
     await incarcaAnunturi();
+    await incarcaAnunturiPublice();
 });
 
 imagineFisierInput.addEventListener("change", () => {
@@ -358,11 +444,13 @@ adForm.addEventListener("submit", async (event) => {
     const titlu = document.getElementById("titlu").value.trim();
     const descriere = document.getElementById("descriere").value.trim();
     const pret = Number(document.getElementById("pret").value);
+    const nrTelefon = document.getElementById("nrTelefon").value.trim();
 
     const payload = {
         titlu,
         descriere,
         pret,
+        nrTelefon,
         imagineUrl: imagineSelectataBase64
     };
 
@@ -392,12 +480,18 @@ logoutBtn.addEventListener("click", () => {
     adsContainer.innerHTML = "";
     reseteazaImagineSelectata();
     seteazaMesajAuth("Te-ai delogat.", "succes");
+    incarcaAnunturiPublice();
 });
 
 refreshBtn.addEventListener("click", async () => {
     await incarcaAnunturi();
 });
 
+refreshPublicBtn.addEventListener("click", async () => {
+    await incarcaAnunturiPublice();
+});
+
 actualizeazaStatusAutentificare();
 reseteazaImagineSelectata();
 incarcaAnunturi();
+incarcaAnunturiPublice();

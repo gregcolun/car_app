@@ -15,3 +15,6 @@ END $$;
 UPDATE car_ads
 SET imagine_url = NULL
 WHERE imagine_url ~ '^[0-9]+$';
+
+ALTER TABLE car_ads
+ADD COLUMN IF NOT EXISTS nr_telefon VARCHAR(30);

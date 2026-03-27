@@ -3,10 +3,12 @@ const logoutBtnDetalii = document.getElementById("logoutBtnDetalii");
 const detaliiAnunt = document.getElementById("detaliiAnunt");
 const mesajDetalii = document.getElementById("mesajDetalii");
 const mesajEditare = document.getElementById("mesajEditare");
+const cardEditare = document.getElementById("cardEditare");
 const editForm = document.getElementById("editForm");
 const editTitlu = document.getElementById("editTitlu");
 const editDescriere = document.getElementById("editDescriere");
 const editPret = document.getElementById("editPret");
+const editNrTelefon = document.getElementById("editNrTelefon");
 const editImagineFisier = document.getElementById("editImagineFisier");
 const mesajImagineEditare = document.getElementById("mesajImagineEditare");
 const previewImagineEditare = document.getElementById("previewImagineEditare");
@@ -75,6 +77,7 @@ function afiseazaDetaliiAnunt(ad) {
                 <h3>${ad.titlu}</h3>
                 <p class="ad-descriere">${ad.descriere}</p>
                 <p class="ad-pret">${formatPret(ad.pret)}</p>
+                <p class="ad-owner">Telefon: ${ad.nrTelefon || "-"}</p>
                 <p class="ad-owner">Publicat de: ${ad.ownerUsername}</p>
             </div>
         </article>
@@ -85,6 +88,7 @@ function precompleteazaFormular(ad) {
     editTitlu.value = ad.titlu;
     editDescriere.value = ad.descriere;
     editPret.value = ad.pret;
+    editNrTelefon.value = ad.nrTelefon || "";
 
     imagineNouaBase64 = null;
     stergeImaginea = false;
@@ -115,27 +119,21 @@ async function incarcaAnunt() {
     const idAnunt = citesteIdAnuntDinUrl();
     if (!idAnunt) {
         seteazaMesaj(mesajDetalii, "ID anunț invalid.", "eroare");
-        editForm.classList.add("ascuns");
+        cardEditare.classList.add("ascuns");
         return;
     }
 
-    const response = await fetch(`/ads/${idAnunt}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
+    const headers = {};
+    if (esteAutentificat()) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`/ads/${idAnunt}`, { headers });
 
     if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("username");
-            window.location.href = "/index.html";
-            return;
-        }
-
         const mesaj = await citesteMesajEroare(response);
         seteazaMesaj(mesajDetalii, mesaj, "eroare");
-        editForm.classList.add("ascuns");
+        cardEditare.classList.add("ascuns");
         return;
     }
 
@@ -143,12 +141,17 @@ async function incarcaAnunt() {
     anuntCurent = ad;
     afiseazaDetaliiAnunt(ad);
 
-    if (ad.ownerUsername !== currentUsername) {
-        seteazaMesaj(mesajEditare, "Poți modifica doar propriile anunțuri.", "eroare");
-        editForm.classList.add("ascuns");
+    if (!esteAutentificat()) {
+        cardEditare.classList.add("ascuns");
         return;
     }
 
+    if (ad.ownerUsername !== currentUsername) {
+        cardEditare.classList.add("ascuns");
+        return;
+    }
+
+    cardEditare.classList.remove("ascuns");
     editForm.classList.remove("ascuns");
     seteazaMesaj(mesajEditare, "", "");
     precompleteazaFormular(ad);
@@ -221,6 +224,7 @@ editForm.addEventListener("submit", async (event) => {
         titlu: editTitlu.value.trim(),
         descriere: editDescriere.value.trim(),
         pret: Number(editPret.value),
+        nrTelefon: editNrTelefon.value.trim(),
         imagineUrl: imagineFinala
     };
 
@@ -257,7 +261,7 @@ logoutBtnDetalii.addEventListener("click", () => {
 });
 
 if (!esteAutentificat()) {
-    window.location.href = "/index.html";
-} else {
-    incarcaAnunt();
+    logoutBtnDetalii.classList.add("ascuns");
 }
+
+incarcaAnunt();

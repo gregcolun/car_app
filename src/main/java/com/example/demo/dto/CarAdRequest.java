@@ -18,6 +18,9 @@ public class CarAdRequest {
     @DecimalMin(value = "0.01", message = "Prețul trebuie să fie mai mare decât 0")
     private BigDecimal pret;
 
+    @NotBlank(message = "Numărul de telefon este obligatoriu")
+    private String nrTelefon;
+
     private String imagineUrl;
 
     public String getTitlu() {
@@ -50,5 +53,13 @@ public class CarAdRequest {
 
     public void setImagineUrl(String imagineUrl) {
         this.imagineUrl = imagineUrl;
+    }
+
+    public String getNrTelefon() {
+        return nrTelefon;
+    }
+
+    public void setNrTelefon(String nrTelefon) {
+        this.nrTelefon = nrTelefon;
     }
 }

@@ -29,6 +29,9 @@ public class CarAd {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal pret;
 
+    @Column(name = "nr_telefon", length = 30)
+    private String nrTelefon;
+
     @Column(columnDefinition = "TEXT")
     private String imagineUrl;
 
@@ -77,6 +80,14 @@ public class CarAd {
 
     public void setImagineUrl(String imagineUrl) {
         this.imagineUrl = imagineUrl;
+    }
+
+    public String getNrTelefon() {
+        return nrTelefon;
+    }
+
+    public void setNrTelefon(String nrTelefon) {
+        this.nrTelefon = nrTelefon;
     }
 
     public User getOwner() {
